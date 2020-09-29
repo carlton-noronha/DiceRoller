@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         return sharedPreferences.getInt(ConstantsAndKeys.SWITCH_STATE, 0);
     }
 
+    // Decide on which image and value has to be set to the ImageView and TextView
     private void decideDiceValues(int numberOnDice) {
         switch (numberOnDice) {
             case 1:
@@ -109,20 +110,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Setting the the image on the ImageView and the corresponding value on the TextView
     private void setDiceValues(int imageID, int textID, int noOnDice) {
         tvDiceValue.setText(textID);
         ivDiceFace.setImageResource(imageID);
     }
 
+    // Function to generate a random number
     private int rollDice() {
         Random random = new Random();
-        return random.nextInt(6) + 1;
+        return random.nextInt(6) + 1; // random.nextInt(bound) returns a value from 0 to bound - 1 hence an extra 1 is added
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
+        // If dice state must be saved then store its last known value to a shared preference file
         if(switchState == 1){
             mEditor = sharedPreferences.edit();
             mEditor.putInt(ConstantsAndKeys.DICE_FACE, numOnDice);
